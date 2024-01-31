@@ -1,7 +1,7 @@
 name: publish_release
 on:
   push:
-    branches: [ "main", "dev"]
+    branches: [ "main"]
 
 jobs:
   release:
@@ -26,7 +26,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # TODO
           tag_name: 0.1.0
           release_name: 0.1.0
           draft: true
