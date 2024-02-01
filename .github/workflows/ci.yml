@@ -18,10 +18,11 @@ jobs:
   # This workflow contains a single job called "build"
   test:
     # The type of runner that the job will run on
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
         python-version: ['3.9', '3.10.8', '3.11']
+        os: [ubuntu-latest, windows-latest]
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -63,10 +64,11 @@ jobs:
           pylint --exit-zero $(git ls-files '*.py')
 
   test_on_setup_whl:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        python-version: [ '3.9', '3.10.8', '3.11']
+        python-version: ['3.9', '3.10.8', '3.11']
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -92,7 +94,10 @@ jobs:
           python uvad_test.py
 
   test_on_setup:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
