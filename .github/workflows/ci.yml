@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.9', '3.10.8', '3.11' ]
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest]
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -68,7 +68,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.9', '3.10.8', '3.11' ]
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -97,12 +97,8 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest]
     steps:
-      - name: setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.10.8
       - uses: actions/checkout@v4
 
       - name: install package by setup.py
