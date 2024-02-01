@@ -42,7 +42,6 @@ jobs:
       - name: install dependence
         working-directory: anomaly-detector
         run: |
-#          poetry env use ${{matrix.python-version}}
           pip install -r ../requirements.txt
           poetry install --only-root
 
