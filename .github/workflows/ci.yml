@@ -30,8 +30,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: Install poetry
-        run: pipx install poetry
+#      - name: Install poetry
+#        run: pipx install poetry
 
       - name: setup python ${{matrix.python-version}}
         uses: actions/setup-python@v4
@@ -42,13 +42,11 @@ jobs:
       - name: install dependence
         working-directory: anomaly-detector
         run: |
-          poetry env use ${{matrix.python-version}}
           pip install -r ../requirements.txt
 
       - name: Add current working directory to PYTHONPATH
         working-directory: anomaly-detector
         run: echo "PYTHONPATH=$PYTHONPATH:$PWD" >> $GITHUB_ENV
-
 
       - name: compile .pyx file
         run: |
@@ -59,8 +57,8 @@ jobs:
         working-directory: anomaly-detector/tests
         run: |
           pip install pytest
-          poetry run python test_demo.py
-          poetry run python uvad_test.py
+          python test_demo.py
+          python uvad_test.py
 
       - name: Analyze code with pylint
         run: |
