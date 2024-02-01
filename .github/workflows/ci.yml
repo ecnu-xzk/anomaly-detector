@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.9', '3.10.8', '3.11' ]
-        os: [ ubuntu-latest]
+        os: [ ubuntu-latest, windows-latest ]
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -37,18 +37,18 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{matrix.python-version}}
-          cache: 'poetry'
+          cache: 'pip'
 
       - name: install dependence
         working-directory: anomaly-detector
         run: |
           poetry env use ${{matrix.python-version}}
-          poetry install 
+          pip install -r ../requirements.txt
+          poetry install --only-root
 
       - name: compile .pyx file
         run: |
-          pip install Cython
-          pip install numpy
+          pip install Cython numpy
           python setup.py build_ext --inplace
 
       - name: run the test script
@@ -68,7 +68,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.9', '3.10.8', '3.11' ]
-        os: [ ubuntu-latest]
+        os: [ ubuntu-latest, windows-latest ]
     steps:
       - uses: actions/checkout@v4
 
@@ -100,11 +100,6 @@ jobs:
         os: [ ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
-
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
 
       - name: install package by setup.py
         run: |
